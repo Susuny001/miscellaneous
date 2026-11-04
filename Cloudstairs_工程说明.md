@@ -1,43 +1,37 @@
-# 云阶 / Cloudstairs
+# 三段钢琴旋律——待本机验收草稿
 
-主交付是 **`Cloudstairs_100BPM_Piano.flp`**，可编辑的 FL Studio 工程。
+此前提交 `1710e50` 的 20 分钟长编排不符合要求，且已被反馈打开时卡死，不能视为可用成品。本次修复候选按用户要求提交，供本机检查，尚未在 FL Studio 中实机验收。
 
-- 固定 100 BPM，4/4，500 小节，编排长度 20:00。
-- 全曲一个钢琴乐器通道；主旋律、伴奏、低音均使用同一钢琴。
-- 三个原创主题：窗边的回声、未寄出的信、越过云沿，配有变奏、连接与尾声。
-- 09:16.800 开始逐步抬升音区，09:55.200 进入高音主题。
-- 所有音乐音符重新创作；参考用于钢琴音色与分解和弦、短音型、应答等写法，没有把参考的旋律段落搬进工程。
+“19–20 分钟”是创作与修整的用时要求，不是歌曲长度。本次按上传参考中的短段落形式重做：三段独立旋律，每段 8 小节，100 BPM，每段 19.2 秒；Playlist 顺次放置三段，仅为方便浏览，合计 57.6 秒。
 
-## 打开工程
+| Pattern | 名称 | 调性 | 中段处理 |
+| --- | --- | --- | --- |
+| 1 | 窗影 | 降 D 大调 | 第 4 小节向上连接，第 5 小节进入高音应答 |
+| 2 | 折线 | B 小调 | 第 4 小节逐级上行，第 5 小节转入高音区 |
+| 3 | 晴隙 | C 大调 | 中段抬升音区，后段以三连音发展 |
 
-使用 FL Studio 25.1.5 或兼容的新版本打开 `.flp`，在 Song 模式播放完整 Playlist。工程包含 19 个已命名的 Pattern，可直接进入 Piano roll 修改。
+右手以连续十六分音符、分解和弦音型和短句应答为主，左手使用持续低音与和弦支撑，参考上传工程的写法。三个段落的主旋律逐音写出，没有随机音高、随机和声或自动延长编排。局部连续音高比对未发现与所给参考相同的连续八音片段；这不替代听感判断，也不代表对全部既有音乐的检索。
 
-音色保留上传参考工程中的 **FLEX → Austrian Grand Piano by UVI → Basic Soft**。需要本机安装相应 FLEX 音色库；工程中保存的是插件预设状态，不包含厂商采样库。若缺少该库，请先通过 FL Studio/FLEX 安装已有参考使用的音色库。
+## 工程候选文件
 
-| 段落 | 完整编排中的起点 | 独立 MIDI |
-| --- | --- | --- |
-| 窗边的回声 | 00:19.200 | `Cloudstairs_100BPM_Piano_Theme_A.mid` |
-| 未寄出的信 | 04:48.000 | `Cloudstairs_100BPM_Piano_Theme_B.mid` |
-| 越过云沿 | 09:55.200 | `Cloudstairs_100BPM_Piano_Theme_C_High.mid` |
+- `Cloudstairs_100BPM_Piano.flp`：保留上传参考的 FLEX / Austrian Grand Piano by UVI / Basic Soft 钢琴预设。
+- `Cloudstairs_100BPM_Piano_FLKeys.flp`：用于排查加载问题的内置 FL Keys 版本，不加载 FLEX，不依赖外部采样路径。
 
-`Cloudstairs_100BPM_Piano.mid` 是完整编排的通用备份。MIDI 不携带 FLEX 音色，主交付仍是 `.flp`。
+两份工程都保留原始 FL Studio 25.1.5 工程的文件头、通道编号、初始化记录以及混音器等非音乐结构。每份仅启用一个钢琴通道，其余槽位禁用；兼容版将其余槽位替换为空 Sampler，不加载其他乐器。旧写入器对原结构的删减、通道重编号和自定义 Pattern 长度写入已移除。
 
-## 已完成的检查
+当前仅完成了数据检查：三个 Pattern、三个 Playlist 片段、470 个音符、钢琴通道与预设、完整原始初始化记录、音符与 MIDI 的一致性，以及无卡键事件。当前环境没有 FL Studio，原生加载和实际音色播放仍待本机验证。因此这些文件是修复候选，不能把上述检查描述成“已确认能在 FL Studio 打开”。
 
-工程包含 6,923 个音符、19 个连续且无空缺的 Playlist 片段和一个 FLEX 钢琴通道；所有音高、起点、长度与力度均与 `Cloudstairs_score.json` 逐项核对。100 BPM 下总编排为 1,200 秒。相同琴键没有重叠触发，重新生成工程不会累积重复元数据。
+配套 MIDI 是通用备份：`Cloudstairs_100BPM_Piano.mid` 包含三段；三个 `Theme_*.mid` 分别保存单段。主交付目标仍是 FLP。
 
-对本次提供的参考进行了主旋律连续音高比对，未发现连续六个及以上音高相同的片段。这只是针对该参考的局部比对，不代表对所有既有音乐的检索。
+## 源文件
 
-当前云环境未安装 FL Studio。上述检查是文件结构、独立解码器和音符数据检查，**尚未在 FL Studio 界面实际打开或调用 FLEX 试听验证**。离线钢琴渲染已完成，但它使用 FluidR3 的 Acoustic Grand Piano，不能作为 FLEX 原音色的实机验证。
-
-## 可复现源文件
-
-`compose_cloudstairs.py` 保存三个主题与完整编排规则；`Cloudstairs_score.json` 保存本版全部音符。生成 MIDI 需要 Python 3 和 `mido==1.3.3`。在仓库根目录运行：
+`compose_cloudstairs.py` 保存逐音写明的三个旋律与和声；`Cloudstairs_score.json` 保存当前乐谱事件；`repair_cloudstairs_flp.py` 将这些音符写入完整的原始工程结构。重新生成需要 Python 3、mido 及完整模板：
 
 ```sh
-python3 compose_cloudstairs.py
+python3 compose_cloudstairs.py --template /path/to/original_reference.flp
+python3 repair_cloudstairs_flp.py --source /path/to/original_reference.flp
 ```
 
-该命令会重建同名工程、MIDI 和乐谱数据；若已经手工编辑工程，请先备份，或使用 `--out` 指向其他目录并用 `--template` 指定本工程。脚本只复用模板中的钢琴预设和非音乐配置，不导入模板的音符。
+第二条命令同时生成原音色版与 FL Keys 兼容版。不会从模板导入原旋律。旧的单通道长曲工程会被拒绝作为模板；运行前请备份自行修改过的同名输出文件。
 
-如需自行离线渲染，额外安装 numpy、soundfile、pyfluidsynth 和系统 libfluidsynth，传入 `--soundfont /path/to/FluidR3_GM.sf2 --render /path/to/output.wav`。FluidR3 由 Frank Wen 等制作，采用 MIT 许可；仓库未附带该采样库。
+离线试听草稿采用 FluidR3 Acoustic Grand Piano 渲染，仅帮助判断音符与段落，不是 FLEX 原音色的实机录音。
